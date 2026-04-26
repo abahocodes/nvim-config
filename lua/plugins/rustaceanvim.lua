@@ -1,7 +1,7 @@
 ---@type LazySpec
 return {
   "mrcjkb/rustaceanvim",
-  ---@param opts RustaceanOpts
+  ---@param opts table
   opts = function(_, opts)
     local server = opts.server or {}
     local prev_on_attach = server.on_attach
