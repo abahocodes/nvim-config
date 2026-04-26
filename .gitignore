@@ -1,0 +1,8 @@
+# Lazy.nvim plugin lock file (optional — remove this line if you want to pin versions)
+# lazy-lock.json
+
+# Claude Code local state
+.claude/
+
+# Neovim spell files
+spell/
