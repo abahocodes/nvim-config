@@ -19,8 +19,9 @@ return {
         filetypes = { "tex", "plaintex", "bib" },
         generator_opts = {
           command = "latexindent",
-          -- read stdin, write stdout, and keep indent.log out of the project directory
-          args = { "--logfile=/dev/null", "-" },
+          -- read stdin, write stdout, keep indent.log out of the project directory,
+          -- and indent with spaces (settings in latexindent.yaml at the config root)
+          args = { "--logfile=/dev/null", "-l=" .. vim.fn.stdpath "config" .. "/latexindent.yaml", "-" },
           to_stdin = true,
         },
         factory = h.formatter_factory,

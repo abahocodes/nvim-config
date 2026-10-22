@@ -1,0 +1,2 @@
+# latexindent settings used by the none-ls formatter in lua/plugins/latexindent.lua
+defaultIndent: "  "
