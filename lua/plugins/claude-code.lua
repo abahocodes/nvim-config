@@ -1,21 +1,23 @@
+---@type LazySpec
 return {
   "greggh/claude-code.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
-  config = function()
-    require("claude-code").setup {
-      window = {
-        position = "botright",
-        split_ratio = 0.3,
-        enter_insert = true,
+  cmd = { "ClaudeCode", "ClaudeCodeContinue", "ClaudeCodeResume", "ClaudeCodeVerbose" },
+  keys = { { "<Leader>ac", desc = "Claude Code: Toggle" } },
+  opts = {
+    window = {
+      position = "botright",
+      split_ratio = 0.3,
+      enter_insert = true,
+    },
+    keymaps = {
+      toggle = {
+        normal = "<Leader>ac",
+        -- a non-printing key so typing " ac" in the Claude prompt doesn't toggle the window
+        terminal = "<C-,>",
       },
-      keymaps = {
-        toggle = {
-          normal = "<leader>ac",
-          terminal = "<leader>ac",
-        },
-      },
-    }
-  end,
+    },
+  },
 }

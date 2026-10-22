@@ -1,5 +1,4 @@
-# Lazy.nvim plugin lock file (optional — remove this line if you want to pin versions)
-# lazy-lock.json
+# lazy-lock.json is tracked so plugin versions are reproducible
 
 # Claude Code local state
 .claude/
