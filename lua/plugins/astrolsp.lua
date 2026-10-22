@@ -32,9 +32,15 @@ return {
         -- "lua_ls",
       },
       timeout_ms = 5000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
+      -- use exactly one formatter per buffer: a none-ls formatter (stylua, prettierd, ...) when one is
+      -- registered for the filetype, otherwise the language server's built-in formatter
+      filter = function(client)
+        local ok, generators = pcall(require, "null-ls.generators")
+        local ft = vim.bo[vim.api.nvim_get_current_buf()].filetype
+        local none_ls_formats = ok and generators.can_run(ft, require("null-ls.methods").internal.FORMATTING)
+        if client.name == "null-ls" then return none_ls_formats end
+        return not none_ls_formats
+      end,
     },
     -- enable servers that you already have installed without mason
     servers = {
@@ -52,6 +58,7 @@ return {
 
       -- the key is the server that is being setup with `vim.lsp.config`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
+      stylua = false, -- stylua already formats through none-ls; don't also run it as a language server
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
