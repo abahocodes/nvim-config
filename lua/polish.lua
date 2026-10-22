@@ -5,7 +5,6 @@
 -- Set up custom filetypes
 vim.filetype.add {
   extension = {
-    mdx = "mdx",
     log = "log",
     conf = "conf",
     env = "dotenv",

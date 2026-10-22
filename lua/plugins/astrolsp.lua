@@ -36,8 +36,25 @@ return {
       -- registered for the filetype, otherwise the language server's built-in formatter
       filter = function(client)
         local ok, generators = pcall(require, "null-ls.generators")
-        local ft = vim.bo[vim.api.nvim_get_current_buf()].filetype
+        local bufnr = vim.api.nvim_get_current_buf()
+        local ft = vim.bo[bufnr].filetype
         local none_ls_formats = ok and generators.can_run(ft, require("null-ls.methods").internal.FORMATTING)
+        -- prettier can only format .astro with prettier-plugin-astro, which a project opts into via its
+        -- prettier config; without one, let the Astro language server (bundles its own) format instead
+        if none_ls_formats and ft == "astro" then
+          none_ls_formats = vim.fs.root(bufnr, {
+            ".prettierrc",
+            ".prettierrc.json",
+            ".prettierrc.yaml",
+            ".prettierrc.yml",
+            ".prettierrc.js",
+            ".prettierrc.cjs",
+            ".prettierrc.mjs",
+            "prettier.config.js",
+            "prettier.config.cjs",
+            "prettier.config.mjs",
+          }) ~= nil
+        end
         if client.name == "null-ls" then return none_ls_formats end
         return not none_ls_formats
       end,
