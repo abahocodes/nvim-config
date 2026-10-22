@@ -1,2 +1,7 @@
 # latexindent settings used by the none-ls formatter in lua/plugins/latexindent.lua
 defaultIndent: "  "
+
+# indent content inside \item by the same 2 spaces (latexindent's default is 6)
+indentRules:
+  item: "  "
+  myitem: "  "
